@@ -1,0 +1,59 @@
+<app-header></app-header>
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card shadow-lg mb-3">
+        <div class="card-header">
+          <h2>Order Details</h2>
+        </div>
+        <div class="card-body">
+          <!-- Selected Products Section -->
+          <div *ngIf="selectedProducts.length > 0">
+            <h3>Selected Products:</h3>
+            <ul class="list-group">
+              <li *ngFor="let product of selectedProducts" class="list-group-item">
+                {{ product.ProductName }} - Price: {{ product.ProductPrice | currency }}
+              </li>
+            </ul>
+          </div>
+
+          <!-- Customer Selection Section -->
+          <h3>Select Customer</h3>
+          <div>
+            <label for="customerSelect">Customer:</label>
+            <select id="customerSelect" [(ngModel)]="selectedUserId" required>
+              <option value="" disabled selected>Select a customer</option>
+              <option *ngFor="let user of users" [value]="user.Id">{{ user.Name }}</option>
+            </select>
+          </div>
+
+          <!-- Payment Method Section -->
+          <div>
+            <label for="paymentMethod">Payment Method:</label>
+            <select id="paymentMethod" [(ngModel)]="paymentMethod" required>
+              <option value="" disabled selected>Select a payment method</option>
+              <option value="credit_card">Credit Card</option>
+              <option value="paypal">PayPal</option>
+              <option value="bank_transfer">Bank Transfer</option>
+            </select>
+          </div>
+
+          <!-- Submit Order Button -->
+          <button (click)="submitOrder()" class="btn btn-primary mt-3">Submit Order</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loading>
+  <div class="text-center">
+    <div class="spinner-border text-primary" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <p>Loading order details...</p>
+  </div>
+</ng-template>
+
+<app-footer></app-footer>

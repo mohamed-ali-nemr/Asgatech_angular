@@ -1,0 +1,49 @@
+<app-header></app-header>
+
+<div class="container" *ngIf="products.length > 0; else noProducts">
+  <h2 class="text-center">Products List</h2>
+  <div class="row ">
+    <div class="col-md-4 " *ngFor="let product of products">
+      <div
+        class="card shadow-lg mb-3"
+        [class.text-danger]="product.AvailablePieces <= 5"
+        [class.font-weight-bold]="product.AvailablePieces <= 5"
+      >
+        <img
+          class="card-img-top"
+          [src]="product.ProductImg"
+          alt="{{ product.ProductName }}"
+        />
+        <div class="card-body">
+          <h5 class="card-title">{{ product.ProductName }}</h5>
+          <p class="card-text">Price: {{ product.ProductPrice | currency }}</p>
+          <p class="card-text">
+            Available: {{ product.AvailablePieces }} ({{
+              product.AvailablePieces <= 5 ? "very few" : ""
+            }})
+          </p>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Edit Quantity</span>
+            </div>
+            <input
+              type="number"
+              class="form-control"
+              [value]="product.AvailablePieces"
+              (change)="updateProductQuantity(product.ProductId, $event)"
+            />
+          </div>
+
+          <button (click)="selectProduct(product)">Add to Order</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #noProducts>
+  <p class="text-center">No products available.</p>
+</ng-template>
+
+<app-footer></app-footer>

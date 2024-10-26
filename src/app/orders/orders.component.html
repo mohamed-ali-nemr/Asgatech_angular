@@ -1,0 +1,38 @@
+<app-header></app-header>
+
+<!-- <ul>
+  <li *ngFor="let order of orders">
+    <a [routerLink]="['/orders/details', order.OrderId]">Order #{{ order.OrderId }}</a>
+  </li>
+</ul> -->
+
+
+<div class="container">
+  <h2 class="text-center">Orders List</h2>
+  <div *ngIf="orders.length > 0; else noOrders">
+    <ul class="list-group mb-3">
+      <li *ngFor="let order of orders" class="list-group-item shadow-lg mb-3">
+        <h3 class="text-primary">
+          <a [routerLink]="['/orders/details', order.OrderId]" class="link-primary">Order #{{ order.OrderId }}</a>
+        </h3>
+        <p class="text-secondary">Date: {{ order.OrderDate }}</p>
+        <ul class="list-group">
+          <li *ngFor="let product of order.Products" class="list-group-item">
+            <p class="text-info">
+              Product ID: {{ product.ProductId }} | Quantity:
+              {{ product.Quantity }}
+            </p>
+          </li>
+        </ul>
+        <p class="text-success">Total Products: {{ order.Products.length }}</p>
+        <p class="text-danger">Payment Method: {{ order.PaymentType }}</p>
+      </li>
+    </ul>
+  </div>
+
+  <ng-template #noOrders>
+    <p class="text-center text-muted">No orders available.</p>
+  </ng-template>
+</div>
+
+<app-footer></app-footer>
