@@ -17,7 +17,21 @@ interface Order {
 export class OrdersService {
   private ordersUrl = 'assets/orders.json'; // Path to your mock JSON file
   private selectedProductsSubject = new BehaviorSubject<any[]>([]); // Store selected products
+  private selectedProducts: any[] = [];
+  private orders: any[] = [];
 
+
+  getOrder() {
+    return this.orders;
+  }
+
+  addOrder(order: any) {
+    this.orders.push(order);
+  }
+
+  addSelectedProduct(product: any): void {
+    this.selectedProducts.push(product);
+  }
 
   constructor(private http: HttpClient) {}
 
@@ -42,6 +56,21 @@ export class OrdersService {
 
   getSelectedProducts(): any[] {
     return this.selectedProductsSubject.value;
+  }
+
+  addProductToSelected(product: any): void {
+    const currentProducts = this.selectedProductsSubject.value;
+    const existingProduct = currentProducts.find(p => p.ProductId === product.ProductId);
+    if (existingProduct) {
+      existingProduct.quantity += product.quantity;
+    } else {
+      currentProducts.push({ ...product });
+    }
+    this.selectedProductsSubject.next(currentProducts);
+  }
+
+  clearSelectedProducts(): void {
+    this.selectedProductsSubject.next([]);
   }
 
 }

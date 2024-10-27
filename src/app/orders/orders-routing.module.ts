@@ -8,7 +8,7 @@ import { UserOrderComponent } from './user-order/user-order.component';
 const routes: Routes = [
   { path: '', component: OrdersComponent }, // Default route for listing orders
   { path: 'details/:id', component: OrderDetailsComponent }, // Route for order details page
-  { path: 'user-order', component: UserOrderComponent }, // Add the route here
+  // { path: 'user-order', component: UserOrderComponent }, // Add the route here
 
 ];
 
